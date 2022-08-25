@@ -25,7 +25,7 @@ class Game:
         self.move_left = False
         self.move_right = False
         
-        self.block_pick = 262
+        self.block_pick = 1
     
     def renderer(self):
         

@@ -28,6 +28,7 @@ class Block:
             pass
     
     def renderer(self,surface):
+        self.render_id = self.id
         try:
             self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png')
             self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
