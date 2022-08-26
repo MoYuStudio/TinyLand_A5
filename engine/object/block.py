@@ -28,7 +28,6 @@ class Block:
             pass
     
     def renderer(self,surface):
-        self.render_id = self.id
         try:
             self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png')
             self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
@@ -74,6 +73,8 @@ class Block:
                 self.perchoose_rect = self.rect.copy()
                 self.perchoose_rect.y = self.perchoose_rect.y # + self.perchoose_rect.height/2
                 surface.blit(self.perchoose, self.perchoose_rect)
+                
+                print(self.id)
             
         except:
             pass
@@ -109,4 +110,5 @@ class Block:
             if touching == True:
                 if self.id == 0:
                     self.id = change_block
+                    self.render_id = self.id
     
