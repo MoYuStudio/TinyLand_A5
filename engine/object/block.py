@@ -11,6 +11,8 @@ class Block:
         self.size = size
         
         self.offset = [0,0]
+        self.motioning = False
+        self.translucence = False
         
         self.render_id = self.id
         self.animation_frame = 0
@@ -29,9 +31,11 @@ class Block:
     
     def renderer(self,surface):
         try:
-            self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png')
+            self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png').convert_alpha()
             self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
-            # self.assets.set_alpha(128)
+            
+            if self.translucence == True:
+                self.assets.set_alpha(128)
             
             self.rect = self.assets.get_rect()
             self.width = self.rect.width

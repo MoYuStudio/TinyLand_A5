@@ -2,7 +2,6 @@
 import pygame
 
 import engine
-import scene
 
 import drivers
 
@@ -26,6 +25,27 @@ class Game:
         self.move_right = False
         
         self.block_pick = 4
+        
+        self.bg1 = pygame.image.load('assets/background/0.png')
+        self.bg1_ract = self.bg1.get_rect()
+        
+    def background(self):
+        
+        surface = pygame.Surface((self.bg1_ract.width,self.bg1_ract.height)).convert_alpha()
+        surface.fill((0,0,0,0))
+        surface.blit(self.bg1,(-self.blockmap_offset[0],-self.blockmap_offset[1]))
+        surface = pygame.transform.scale(surface,(self.bg1_ract.width*self.size, self.bg1_ract.height*self.size))
+        
+        return surface
+        
+    def blockmap(self):
+        
+        surface = pygame.Surface((self.window_size[0],self.window_size[1])).convert_alpha()
+        surface.fill((0,0,0,0))
+        
+        self.blockmap_obj.renderer(surface,self.blockmap_offset)
+        
+        return surface
     
     def renderer(self):
         
@@ -37,13 +57,15 @@ class Game:
             self.blockmap_offset[0] -= self.move_speed
         if self.move_right == True:
             self.blockmap_offset[0] += self.move_speed
+            
         
-        surface = pygame.Surface((self.window_size[0],self.window_size[1])).convert_alpha()
-        surface.fill((0,0,0,0))
+        scene = pygame.Surface((self.window_size[0],self.window_size[1])).convert_alpha()
+        scene.fill((0,0,0,0))
         
-        self.blockmap_obj.renderer(surface,self.blockmap_offset)
+        scene.blit(self.background(),(0,0))
+        scene.blit(self.blockmap(),(0,0))
         
-        return surface
+        return scene
     
     def scene_event(self,event):
         self.event = event
