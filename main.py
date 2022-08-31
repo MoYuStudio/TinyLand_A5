@@ -1,4 +1,6 @@
 
+import time
+
 import sys
 sys.dont_write_bytecode = True
 #sys.path.append('./')
@@ -23,13 +25,20 @@ window_title = pygame.display.set_caption(config['window_title'])
 window_icon = pygame.display.set_icon(pygame.image.load(config['window_icon']))
 window_clock = pygame.time.Clock()
 
-is_scene = 'game'
+is_scene = 'prologue'
 scene_list = {
+                'prologue':scene.prologue.Prologue(),
                 'game':scene.game.Game(),
             }
 
 RUN = True
 while RUN == True:
+    try:
+        if scene_list[is_scene].scene_switch != None:
+            is_scene = scene_list[is_scene].scene_switch
+    except:
+        pass
+        
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             RUN = False
@@ -37,6 +46,10 @@ while RUN == True:
     
     window.fill((0,0,0,0))
     window.blit(scene_list[is_scene].renderer(), (0,0))
-    
+
     pygame.display.update()
     window_clock.tick(config['window_fps'])
+    
+    if is_scene == 'prologue':
+        time.sleep(1)
+    

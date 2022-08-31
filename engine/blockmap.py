@@ -6,6 +6,8 @@ class Blockmap:
         self.map = map
         self.block_size = block_size
         
+        self.block_motion_on = 0
+        
         self.block_list = {}
         self.block_pos_list = {}
         
@@ -48,6 +50,7 @@ class Blockmap:
             self.block_list[block].offset = pos_offset
             self.block_list[block].motion()
             if self.block_list[block].motioning == True:
+                self.block_motion_on = self.block_list[block].id
                 for id in self.translucence_id_list:
                     try:
                         self.block_list[id].translucence = False

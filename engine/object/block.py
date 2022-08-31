@@ -1,5 +1,4 @@
 
-from ctypes import sizeof
 import pygame
 
 import drivers
@@ -77,8 +76,6 @@ class Block:
                 self.perchoose_rect = self.rect.copy()
                 self.perchoose_rect.y = self.perchoose_rect.y # + self.perchoose_rect.height/2
                 surface.blit(self.perchoose, self.perchoose_rect)
-                
-                print(self.id)
             
         except:
             pass
