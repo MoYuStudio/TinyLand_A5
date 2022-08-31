@@ -35,7 +35,7 @@ class Block:
             self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
             
             if self.translucence == True:
-                self.assets.set_alpha(128)
+                self.assets.set_alpha(48)
             
             self.rect = self.assets.get_rect()
             self.width = self.rect.width
