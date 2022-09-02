@@ -25,7 +25,7 @@ window_title = pygame.display.set_caption(config['window_title'])
 window_icon = pygame.display.set_icon(pygame.image.load(config['window_icon']))
 window_clock = pygame.time.Clock()
 
-is_scene = 'prologue'
+is_scene = 'game'
 scene_list = {
                 'prologue':scene.prologue.Prologue(),
                 'game':scene.game.Game(),
@@ -50,6 +50,6 @@ while RUN == True:
     pygame.display.update()
     window_clock.tick(config['window_fps'])
     
-    if is_scene == 'prologue':
-        time.sleep(1)
+    # if is_scene == 'prologue':
+    #     time.sleep(1)
     

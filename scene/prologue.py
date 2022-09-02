@@ -1,4 +1,6 @@
 
+import time
+
 import pygame
 
 import engine
@@ -10,18 +12,37 @@ class Prologue:
     def __init__(self):
         self.window_size = pygame.display.get_surface().get_size()
         
+        yaml_file = drivers.yaml.yaml_driver.YamlDriver()
+        self.config = yaml_file.read(read_file='data/config.yml')
+        
         self.scene_switch = None
+        
+        self.logo_original = pygame.image.load('assets/icon/logo.png').convert_alpha()
+        self.logo = pygame.transform.scale(self.logo_original,(16*self.config['ui_size'], 16*self.config['ui_size']))
+        self.rect = self.logo.get_rect()
+        self.wide = self.rect.width
+        
+        alpha=[]
+        for a in range(0,301,1):
+            alpha.append(a)
+        self.alpha = iter(alpha)
+        
+        self.timer = 100
     
     def renderer(self):
         scene = pygame.Surface((self.window_size[0],self.window_size[1])).convert_alpha()
         scene.fill((0,0,0,0))
         
-        icon_original = pygame.image.load('assets/icon/steam_title_icon_fin.png').convert_alpha()
-        # icon = pygame.transform.scale(icon_original,(16*self.size/2, 16*self.size/2))
+        alpha_num = next(self.alpha)
         
-        scene.blit(icon_original, (0,0))
-
-        self.scene_switch = 'game'
+        if alpha_num >= 300:
+            self.scene_switch = 'game'
+        
+        if alpha_num > 255:
+            alpha_num == 255
+        self.logo.set_alpha(alpha_num)
+        scene.blit(self.logo, ((self.window_size[0]/2)-self.wide/2,(self.window_size[1]/2)-self.wide/2))
+        time.sleep(0.0001)
         
         return scene
     

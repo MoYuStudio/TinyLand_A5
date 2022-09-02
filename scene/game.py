@@ -10,7 +10,7 @@ class Game:
     def __init__(self):
         self.window_size = pygame.display.get_surface().get_size()
         yaml_file = drivers.yaml.yaml_driver.YamlDriver()
-        self.config = yaml_file.read(read_file='data/scene/game.yml')
+        self.config = yaml_file.read(read_file='data/config.yml')
         self.block_data = yaml_file.read(read_file='data/block/data.yml')
         
         json_file = drivers.json.json_driver.JsonDriver(path='data/blockmap')
@@ -19,7 +19,7 @@ class Game:
         self.size = 4
         self.blockmap_obj = engine.blockmap.Blockmap(self.map['1'],self.size)
         
-        self.blockmap_offset = [self.window_size[0]/self.size/2,self.window_size[1]/self.size/2]
+        self.blockmap_offset = [self.window_size[0]/2,self.window_size[1]/2]
         self.move_speed = 3
         self.move_up = False
         self.move_down = False
@@ -37,7 +37,7 @@ class Game:
         
         surface = pygame.Surface((self.bg1_ract.width,self.bg1_ract.height)).convert_alpha()
         surface.fill((0,0,0,0))
-        surface.blit(self.bg1,(-self.blockmap_offset[0],-self.blockmap_offset[1]))
+        surface.blit(self.bg1,(-self.blockmap_offset[0]+self.window_size[0]/2,-self.blockmap_offset[1]+self.window_size[1]/4))
         surface = pygame.transform.scale(surface,(self.bg1_ract.width*self.size, self.bg1_ract.height*self.size))
         
         return surface
@@ -59,19 +59,19 @@ class Game:
         # self.blockmap_obj.block_motion_on
         
         choose_block_original = pygame.image.load('assets/block/'+str(self.blockmap_obj.block_motion_on)+'.png').convert_alpha()
-        choose_block = pygame.transform.scale(choose_block_original,(16*self.size/2, 16*self.size/2))
+        choose_block = pygame.transform.scale(choose_block_original,(16*self.config['ui_size']/2, 16*self.config['ui_size']/2))
         
-        choose_block_name_font = pygame.font.Font('assets/font/kenney_pixel.ttf', 32)
+        choose_block_name_font = pygame.font.Font('assets/font/kenney_pixel.ttf', 7*self.config['ui_size'])
         choose_block_name = choose_block_name_font.render(self.block_data[self.blockmap_obj.block_motion_on]['name'], True, (255,255,255))
         
-        surface.blit(choose_block, (self.window_size[0]/(16*self.size),self.window_size[1]/(9*self.size)))
-        surface.blit(choose_block_name, ((self.window_size[0]/(16*self.size))+(self.window_size[0]/(5*self.size)),self.window_size[1]/(9*self.size)))
+        surface.blit(choose_block, (self.window_size[0]/(16*self.config['ui_size']),self.window_size[1]/(9*self.config['ui_size'])))
+        surface.blit(choose_block_name, ((self.window_size[0]/(16*self.config['ui_size']))+(self.window_size[0]/(6*self.config['ui_size'])),self.window_size[1]/(6*self.config['ui_size'])))
         
         return surface
     
     def block_pick_menu(self):
         
-        surface = pygame.Surface((self.window_size[0]/self.size,self.window_size[1]/self.size)).convert_alpha()
+        surface = pygame.Surface((self.window_size[0]/self.config['ui_size'],self.window_size[1]/self.config['ui_size'])).convert_alpha()
         surface.fill((0,0,0,0))
         
         surface.fill((0,0,0,128))
@@ -85,7 +85,7 @@ class Game:
         x,y = 0,0
         for block in block_list:
             block_original = pygame.image.load(block)
-            block = pygame.transform.scale(block_original,(16*self.size/2, 16*self.size/2))
+            block = pygame.transform.scale(block_original,(16*self.config['ui_size']/2, 16*self.config['ui_size']/2))
             surface.blit(block,(100+x*(64),100+y*(64)))
             if x == 6:
                 x = 0
