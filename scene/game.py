@@ -144,6 +144,9 @@ class Game:
             if self.event.type == pygame.KEYDOWN:
                 if self.event.key == pygame.K_q:
                     self.block_pick_menu_active = True
+                if self.event.key == pygame.K_r:
+                    print('reset the perlin noise map ...')
+                    self.blockmap_obj.perlin_noise()
                     
             if self.event.type == pygame.KEYUP:
                 if self.event.key == pygame.K_UP or self.event.key == pygame.K_w:

@@ -63,6 +63,19 @@ class Blockmap:
         
         perlin_noise_map = {0:perlin_noise_map_0,1:perlin_noise_map_1}
         
+        self.map = perlin_noise_map
+        
+        try:
+            for y in self.map:
+                for x in range(len(self.map[y])):
+                    for z in range(len(self.map[y][x])):
+                        block_pos = {'x':int(x),'y':int(y),'z':int(z)}
+                        block_id = self.map[y][x][z]
+                        self.block_list[str(x)+'_'+str(y)+'_'+str(z)] = object.block.Block(block_id,block_pos,self.block_size)
+                        self.block_pos_list[str(x)+'_'+str(y)+'_'+str(z)] = block_pos
+        except:
+            pass
+        
         return perlin_noise_map
             
     def renderer(self,surface,pos_offset=[0,0]):
