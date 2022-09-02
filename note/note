@@ -1,2 +1,2 @@
 
-pyinstaller -i assets\icon\icon.ico -w -F main.py
+pyinstaller -i assets\icon\icon_win256.ico -w -F main.py
