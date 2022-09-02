@@ -47,7 +47,7 @@ class Prologue:
         if alpha_num > 255:
             alpha_num = 255
             if self.sound_timer != 0:
-                pygame.mixer.Channel(1).play(pygame.mixer.Sound('assets/sound/kenney_interfacesounds/Audio/bong_001.ogg'))
+                pygame.mixer.Channel(1).play(pygame.mixer.Sound('assets/sound/kenney_interfacesounds/bong_001.ogg'))
                 self.sound_timer -= 1
 
         self.logo.set_alpha(alpha_num)
