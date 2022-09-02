@@ -14,6 +14,7 @@ LocalsVar = locals()
 pygame.init()
 pygame.display.init()
 pygame.font.init()
+pygame.mixer.init()
 
 yaml_file = drivers.yaml.yaml_driver.YamlDriver()
 config = yaml_file.read(read_file='data/config.yml')

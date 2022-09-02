@@ -23,11 +23,13 @@ class Prologue:
         self.wide = self.rect.width
         
         alpha=[]
-        for a in range(0,301,1):
+        for a in range(0,450+1,1):
             alpha.append(a)
         self.alpha = iter(alpha)
         
-        self.timer = 100
+        self.timer = 255
+        
+        self.sound_timer = 1
     
     def renderer(self):
         scene = pygame.Surface((self.window_size[0],self.window_size[1])).convert_alpha()
@@ -35,11 +37,19 @@ class Prologue:
         
         alpha_num = next(self.alpha)
         
-        if alpha_num >= 300:
-            self.scene_switch = 'menu'
+        if alpha_num >= 450:
+            self.scene_switch = 'game'
         
+        if alpha_num > 300:
+            self.timer -= 2
+            alpha_num = self.timer
+            
         if alpha_num > 255:
-            alpha_num == 255
+            alpha_num = 255
+            if self.sound_timer != 0:
+                pygame.mixer.Channel(1).play(pygame.mixer.Sound('assets/sound/kenney_interfacesounds/Audio/bong_001.ogg'))
+                self.sound_timer -= 1
+
         self.logo.set_alpha(alpha_num)
         scene.blit(self.logo, ((self.window_size[0]/2)-self.wide/2,(self.window_size[1]/2)-self.wide/2))
         time.sleep(0.0001)
