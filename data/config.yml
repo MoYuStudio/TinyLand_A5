@@ -7,6 +7,6 @@ window_mod: null
 window_size:
   - 1280
   - 720
-window_fps: 90
+window_fps: 120
 
 ui_size: 6

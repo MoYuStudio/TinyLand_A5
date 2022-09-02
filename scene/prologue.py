@@ -36,7 +36,7 @@ class Prologue:
         alpha_num = next(self.alpha)
         
         if alpha_num >= 300:
-            self.scene_switch = 'game'
+            self.scene_switch = 'menu'
         
         if alpha_num > 255:
             alpha_num == 255

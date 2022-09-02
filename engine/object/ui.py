@@ -7,7 +7,7 @@ class UI:
         self.ui_type = ui_type
         self.ui_type_list = ['text_button']
         
-        self.font_dict = {'kenney_pixel':[pygame.font.Font('tinyland/assets/font/kenney_pixel.ttf', size)for size in range(0,(128+1),1)]}
+        self.font_dict = {'kenney_pixel':[pygame.font.Font('assets/font/kenney_pixel.ttf', size)for size in range(0,(128+1),1)]}
         
     def text_button_renderer(self,surface,text='text',pos=[0,0],color=(255,255,255),font_size=32,font_type='kenney_pixel'):
 

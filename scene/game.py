@@ -31,13 +31,13 @@ class Game:
         self.bg1 = pygame.image.load('assets/background/0.png')
         self.bg1_ract = self.bg1.get_rect()
         
-        self.block_pick_menu_active = True
+        self.block_pick_menu_active = False
         
     def background(self):
         
         surface = pygame.Surface((self.bg1_ract.width,self.bg1_ract.height)).convert_alpha()
         surface.fill((0,0,0,0))
-        surface.blit(self.bg1,(-self.blockmap_offset[0]+self.window_size[0]/2,-self.blockmap_offset[1]+self.window_size[1]/4))
+        surface.blit(self.bg1,(-self.blockmap_offset[0]+self.window_size[0]/4,-self.blockmap_offset[1]+self.window_size[1]/4))
         surface = pygame.transform.scale(surface,(self.bg1_ract.width*self.size, self.bg1_ract.height*self.size))
         
         return surface
