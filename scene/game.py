@@ -16,7 +16,7 @@ class Game:
         json_file = drivers.json.json_driver.JsonDriver(path='data/blockmap')
         self.map = json_file.read()
         
-        self.size = 4
+        self.size = 6
         self.blockmap_obj = engine.blockmap.Blockmap(self.map['1'],self.size)
         
         self.blockmap_offset = [self.window_size[0]/2,self.window_size[1]/2]
