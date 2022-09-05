@@ -33,7 +33,7 @@ class Blockmap:
         self.block_list_iter = iter(self.block_list)
     
     def perlin_noise_set(self):
-        map_boarder = 9
+        map_boarder = 12
         octaves = 2 #2
         freq = random.randint(5,10) #12
         map_seed = random.randint(100000, 999999)
@@ -93,15 +93,19 @@ class Blockmap:
         threads_num = 4
         
         key = list(self.block_list.keys())
-        key_num = int(len(key)/threads_num)
-        key_t = []
+        # key_num = int(len(key)/threads_num)
+        key_t = [[],[],[],[],[],[]]
         
-        for i in range(threads_num):
-            key_t_list = key[key_num*i:key_num*(i+1)]
-            key_t.append(key_t_list)
+        key_t[0] = key[0:20]
+        key_t[1] = key[20:40]
+        key_t[2] = key[40:60]
+        key_t[3] = key[60:80]
+        key_t[4] = key[80:100]
+        key_t[5] = key[100:120]
+        # for i in range(threads_num):
+        #     key_t_list = key[key_num*i:key_num*(i+1)]
+        #     key_t.append(key_t_list)
             
-        
-        
         def thr(key_thr):
             threadLock.acquire()
             for block in key_thr:
@@ -121,29 +125,32 @@ class Blockmap:
                 self.block_list[block].renderer(self.surface)
             threadLock.release()
             
+        # t = {}
+        # for num in range(threads_num):
+        #     t[num] = threading.Thread(target=thr, args=(key_t[num],))
+        #     t[num].start()
+        #     threads.append(t[num])
         
-        
-        t = {}
-        for num in range(threads_num):
-            t[num] = threading.Thread(target=thr, args=(key_t[num],))
-            t[num].start()
-            threads.append(t[num])
-        
-        # t1 = threading.Thread(target=thr, args=(key_1,))
-        # t2 = threading.Thread(target=thr, args=(key_2,))
-        # t3 = threading.Thread(target=thr, args=(key_3,))
-        # t4 = threading.Thread(target=thr, args=(key_4,))
+        t1 = threading.Thread(target=thr, args=(key_t[0],))
+        t2 = threading.Thread(target=thr, args=(key_t[1],))
+        t3 = threading.Thread(target=thr, args=(key_t[2],))
+        t4 = threading.Thread(target=thr, args=(key_t[3],))
+        t5 = threading.Thread(target=thr, args=(key_t[4],))
+        t6 = threading.Thread(target=thr, args=(key_t[5],))
 
-        # t1.start()
-        # t2.start()
-        # t3.start()
-        # t4.start()
+        t1.start()
+        t2.start()
+        t3.start()
+        t4.start()
+        t5.start()
+        t6.start()
 
-        # threads.append(t1)
-        # threads.append(t2)
-        # threads.append(t3)
-        # threads.append(t4)
-        
+        threads.append(t1)
+        threads.append(t2)
+        threads.append(t3)
+        threads.append(t4)
+        threads.append(t5)
+        threads.append(t6)
 
         for t in threads:
             t.join()
