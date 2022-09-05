@@ -99,13 +99,13 @@ class Game:
     def renderer(self):
         
         if self.move_up == True:
-            self.blockmap_offset[1] -= self.move_speed
-        if self.move_down == True:
             self.blockmap_offset[1] += self.move_speed
+        if self.move_down == True:
+            self.blockmap_offset[1] -= self.move_speed
         if self.move_left == True:
-            self.blockmap_offset[0] -= self.move_speed
-        if self.move_right == True:
             self.blockmap_offset[0] += self.move_speed
+        if self.move_right == True:
+            self.blockmap_offset[0] -= self.move_speed
             
         
         scene = pygame.Surface((self.window_size[0],self.window_size[1])).convert_alpha()
@@ -146,7 +146,7 @@ class Game:
                     self.block_pick_menu_active = True
                 if self.event.key == pygame.K_r:
                     print('reset the perlin noise map ...')
-                    self.blockmap_obj.perlin_noise()
+                    self.blockmap_obj.perlin_noise_set()
                     
             if self.event.type == pygame.KEYUP:
                 if self.event.key == pygame.K_UP or self.event.key == pygame.K_w:

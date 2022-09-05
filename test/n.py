@@ -1,13 +1,10 @@
+import perlin_noise
 
-import numpy
-map = numpy.zeros((3,3,3))
+noise = perlin_noise.PerlinNoise(octaves=3.5, seed=777)
 
-print(map.shape)
-print(numpy.shape(map))
+print(noise([1,1]))
+# # accepts as argument float and/or list[float]
+# noise(0.5) == noise([0.5])
 
-# xyz
-print(map[0][0][0])
-
-map[0][0][0] = 1
-
-print(type(map))
+# # noise not limited in space dimension and seamless in any space size
+# noise([0.5, 0.5]) == noise([0.5, 0.5, 0, 0, 0])

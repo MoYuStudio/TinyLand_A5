@@ -28,7 +28,7 @@ class Block:
             print('Engine/Object: Block (block_data) Missing')
             pass
     
-    def renderer(self,surface):
+    def renderer(self,surface):       
         try:
             self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png').convert_alpha()
             self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
@@ -79,7 +79,6 @@ class Block:
             
         except:
             pass
-            
     
     def motion(self):
         try:
@@ -99,17 +98,20 @@ class Block:
             pass
     
     def touch(self,change_block):
-        touch_rect = self.rect.copy()
-        touch_rect.y = touch_rect.y + touch_rect.height/2
-        
-        pos = pygame.mouse.get_pos()
-        block_mask = pygame.mask.from_surface(self.mask)
-        pos_in_mask = (pos[0]-touch_rect.x),(pos[1]-touch_rect.y)
-        touching = touch_rect.collidepoint(*pos) and block_mask.get_at(pos_in_mask)
-        
-        if pygame.mouse.get_pressed()[0] == True:
-            if touching == True:
-                if self.id == 0:
-                    self.id = change_block
-                    self.render_id = self.id
+        try:
+            touch_rect = self.rect.copy()
+            touch_rect.y = touch_rect.y + touch_rect.height/2
+            
+            pos = pygame.mouse.get_pos()
+            block_mask = pygame.mask.from_surface(self.mask)
+            pos_in_mask = (pos[0]-touch_rect.x),(pos[1]-touch_rect.y)
+            touching = touch_rect.collidepoint(*pos) and block_mask.get_at(pos_in_mask)
+            
+            if pygame.mouse.get_pressed()[0] == True:
+                if touching == True:
+                    if self.id == 0:
+                        self.id = change_block
+                        self.render_id = self.id
+        except:
+            pass
     
