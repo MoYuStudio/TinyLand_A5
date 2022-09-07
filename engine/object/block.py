@@ -27,20 +27,23 @@ class Block:
         except:
             print('Engine/Object: Block (block_data) Missing')
             pass
+        
+        self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png').convert_alpha()
+        self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
+        
+        self.rect = self.assets.get_rect()
+        self.width = self.rect.width
+        
+        self.mask_original = pygame.image.load(self.config['mask_original']).convert_alpha()
+        self.mask = pygame.transform.scale(self.mask_original,((self.width,self.width)))
     
     def renderer(self,surface):       
         try:
-            self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png').convert_alpha()
-            self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
             
             if self.translucence == True:
                 self.assets.set_alpha(48)
-            
-            self.rect = self.assets.get_rect()
-            self.width = self.rect.width
-            
-            self.mask_original = pygame.image.load(self.config['mask_original']).convert_alpha()
-            self.mask = pygame.transform.scale(self.mask_original,((self.width,self.width)))
+            if self.translucence == False:
+                self.assets.set_alpha(255)
             
             the_block_data = self.block_data[self.id]
 
