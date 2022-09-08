@@ -1,4 +1,6 @@
 
+# import glob
+    
 import pygame
 
 import drivers
@@ -8,6 +10,7 @@ class Block:
         self.id = id
         self.pos = pos
         self.size = size
+        #self.assets = assets
         
         self.offset = [0,0]
         self.motioning = False
@@ -28,6 +31,26 @@ class Block:
             print('Engine/Object: Block (block_data) Missing')
             pass
         
+        # self.block_id = []
+        # for filename in glob.glob(r'assets/block/*.png'):
+        #     self.block_id.append(filename[13:-4])
+        
+        # self.block_id = [str(id),'254','255']
+        
+        # self.assets_original = {}
+        # for id in self.block_id:
+        #     self.assets_original[id] = pygame.image.load('assets/block/'+id+'.png')
+        # self.assets = {}
+        # for id in self.block_id:
+        #     self.assets[id] = pygame.transform.scale(self.assets_original[id],(16*self.size, 16*self.size))
+        
+        
+        # self.rect = self.assets[str(self.id)].get_rect()
+        # self.width = self.rect.width
+        
+        # self.mask = self.assets['254']
+        # self.perchoose = self.assets['255']
+        
         self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png').convert_alpha()
         self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
         
@@ -36,10 +59,14 @@ class Block:
         
         self.mask_original = pygame.image.load(self.config['mask_original']).convert_alpha()
         self.mask = pygame.transform.scale(self.mask_original,((self.width,self.width)))
+        
+        self.perchoose_original = pygame.image.load(self.config['perchoose_original']).convert_alpha()
+        self.perchoose = pygame.transform.scale(self.perchoose_original,((self.width,self.width)))
     
     def renderer(self,surface):       
         try:
-            
+            # [str(self.render_id)]
+
             if self.translucence == True:
                 self.assets.set_alpha(48)
             if self.translucence == False:
@@ -69,12 +96,11 @@ class Block:
             
             self.rect.x = self.pos['z']*(self.width/2)-self.pos['x']*(self.width/2)+self.offset[0]
             self.rect.y = self.pos['x']*(self.width/4)+self.pos['z']*(self.width/4)+self.offset[1]+(-self.width/2)*int(self.pos['y'])
-            
+
             surface.blit(self.assets, self.rect)
             
             if self.motioning == True:
-                self.perchoose_original = pygame.image.load(self.config['perchoose_original']).convert_alpha()
-                self.perchoose = pygame.transform.scale(self.perchoose_original,((self.width,self.width)))
+                
                 self.perchoose.set_alpha(64)
                 self.perchoose_rect = self.rect.copy()
                 self.perchoose_rect.y = self.perchoose_rect.y # + self.perchoose_rect.height/2

@@ -1,10 +1,11 @@
 
 import time
+# import glob
 import random
-import queue
 import threading
 
 import noise
+import pygame
 
 import engine.object as object
 
@@ -22,13 +23,29 @@ class Blockmap:
         self.translucence_mod = None
         self.translucence_id_list = ['0_0_0']
         
+        # self.block_id = []
+        # for filename in glob.glob(r'assets/block/*.png'):
+        #     self.block_id.append(filename[13:-4])
+        
+        # self.block_assets_original = {}
+        # for id in self.block_id:
+        #     self.block_assets_original[id] = pygame.image.load('assets/block/'+id+'.png')
+        # self.block_assets = {}
+        # for id in self.block_id:
+        #     self.block_assets[id] = pygame.transform.scale(self.block_assets_original[id],(16*self.block_size, 16*self.block_size))
+        
+        # self.block_rect = self.block_assets['0'].get_rect()
+        # self.block_width = self.block_rect.width
+        # self.block_mask = pygame.transform.scale(self.block_assets['254'],((self.block_width,self.block_width)))
+        # self.block_perchoose = pygame.transform.scale(self.block_assets['254'],((self.block_width,self.block_width)))
+        
         for y in self.map:
             for x in range(len(self.map[y])):
                 for z in range(len(self.map[y][x])):
                     block_pos = {'x':int(x),'y':int(y),'z':int(z)}
                     block_id = self.map[y][x][z]
-                    self.block_list[str(x)+'_'+str(y)+'_'+str(z)] = object.block.Block(block_id,block_pos,self.block_size)
                     self.block_pos_list[str(x)+'_'+str(y)+'_'+str(z)] = block_pos
+                    self.block_list[str(x)+'_'+str(y)+'_'+str(z)] = object.block.Block(block_id,block_pos,self.block_size)#,self.block_assets
     
         self.block_list_iter = iter(self.block_list)
     
