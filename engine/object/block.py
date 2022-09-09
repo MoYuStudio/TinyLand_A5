@@ -30,8 +30,14 @@ class Block:
             print('Engine/Object: Block (block_data) Missing')
             pass
         
-        self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png').convert_alpha()
+        self.assets_original = pygame.image.load(self.config['assets_original']+str(self.id)+'.png').convert_alpha()
         self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
+
+        try:
+            self.assets_a1_original = pygame.image.load(self.config['assets_original']+str(self.id)+'a1'+'.png').convert_alpha()
+            self.assets_a1 = pygame.transform.scale(self.assets_a1_original,(16*self.size, 16*self.size))
+        except:
+            pass
         
         self.rect = self.assets.get_rect()
         self.width = self.rect.width
@@ -75,7 +81,10 @@ class Block:
             self.rect.x = self.pos['z']*(self.width/2)-self.pos['x']*(self.width/2)+self.offset[0]
             self.rect.y = self.pos['x']*(self.width/4)+self.pos['z']*(self.width/4)+self.offset[1]+(-self.width/2)*int(self.pos['y'])
 
-            surface.blit(self.assets, self.rect)
+            if self.animation_frame == 0:
+                surface.blit(self.assets, self.rect)
+            if self.animation_frame == 1:
+                surface.blit(self.assets_a1, self.rect)
             
             if self.motioning == True:
                 
