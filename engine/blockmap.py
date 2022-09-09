@@ -85,7 +85,7 @@ class Blockmap:
     def renderer(self,surface,pos_offset=[0,0]):
         self.surface = surface
         
-        start_time = time.time()
+        
         
         threadLock = threading.Lock()
         threads = []
@@ -127,7 +127,7 @@ class Blockmap:
         for t in threads:
             t.join()
         
-        print('1   '+str(time.time()-start_time))
+        
             
     def touch(self,change_block,pos_offset=[0,0]):
         for block in self.block_list:

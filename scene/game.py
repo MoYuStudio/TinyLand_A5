@@ -1,5 +1,6 @@
 
 import glob
+import time
 
 import pygame
 
@@ -16,10 +17,11 @@ class Game:
         json_file = drivers.json.json_driver.JsonDriver(path='data/blockmap')
         self.map = json_file.read()
         
-        self.size = 4
-        self.blockmap_obj = engine.blockmap.Blockmap(self.map['1'],self.size)
+        # self.size = 1
+        self.blockmap_low_size = 4
+        self.blockmap_obj = engine.blockmap.Blockmap(self.map['1'],self.blockmap_low_size)
         
-        self.blockmap_offset = [self.window_size[0]/2,self.window_size[1]/2]
+        self.blockmap_offset = [self.window_size[0]/2/self.blockmap_low_size,self.window_size[1]/2/self.blockmap_low_size]
         self.move_speed = 3
         self.move_up = False
         self.move_down = False
@@ -38,16 +40,21 @@ class Game:
         surface = pygame.Surface((self.bg1_ract.width,self.bg1_ract.height)).convert_alpha()
         surface.fill((0,0,0,0))
         surface.blit(self.bg1,(-self.blockmap_offset[0]+self.window_size[0]/4,-self.blockmap_offset[1]+self.window_size[1]/4))
-        surface = pygame.transform.scale(surface,(self.bg1_ract.width*self.size, self.bg1_ract.height*self.size))
+        surface = pygame.transform.scale(surface,(self.bg1_ract.width*self.blockmap_low_size, self.bg1_ract.height*self.blockmap_low_size))
         
         return surface
         
     def blockmap(self):
+        start_time = time.time()
         
-        surface = pygame.Surface((self.window_size[0],self.window_size[1])).convert_alpha()
+        surface = pygame.Surface((self.window_size[0]/self.blockmap_low_size,self.window_size[1]/self.blockmap_low_size)).convert_alpha()
         surface.fill((0,0,0,0))
         
         self.blockmap_obj.renderer(surface,self.blockmap_offset)
+        
+        surface = pygame.transform.scale(surface,(self.window_size[0],self.window_size[1]))
+        
+        print('1   '+str(time.time()-start_time))
         
         return surface
 

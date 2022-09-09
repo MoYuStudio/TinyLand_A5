@@ -9,4 +9,5 @@ window_size:
   - 720
 window_fps: 120
 
+resolution_size: 4
 ui_size: 6

@@ -29,24 +29,22 @@ class Block:
         except:
             print('Engine/Object: Block (block_data) Missing')
             pass
-        
-        self.assets_original = pygame.image.load(self.config['assets_original']+str(self.id)+'.png').convert_alpha()
-        self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
+        # _original
+        self.assets = pygame.image.load(self.config['assets_original']+str(self.id)+'.png').convert_alpha()
 
         try:
-            self.assets_a1_original = pygame.image.load(self.config['assets_original']+str(self.id)+'a1'+'.png').convert_alpha()
-            self.assets_a1 = pygame.transform.scale(self.assets_a1_original,(16*self.size, 16*self.size))
+            self.assets_a1 = pygame.image.load(self.config['assets_original']+str(self.id)+'a1'+'.png').convert_alpha()
+
         except:
             pass
         
         self.rect = self.assets.get_rect()
         self.width = self.rect.width
         
-        self.mask_original = pygame.image.load(self.config['mask_original']).convert_alpha()
-        self.mask = pygame.transform.scale(self.mask_original,((self.width,self.width)))
-        
-        self.perchoose_original = pygame.image.load(self.config['perchoose_original']).convert_alpha()
-        self.perchoose = pygame.transform.scale(self.perchoose_original,((self.width,self.width)))
+        self.mask = pygame.transform.scale(pygame.image.load(self.config['mask_original']).convert_alpha(),((self.width*self.size,self.width*self.size)))
+
+        self.perchoose = pygame.image.load(self.config['perchoose_original']).convert_alpha()
+
     
     def renderer(self,surface):       
         try:
@@ -90,6 +88,7 @@ class Block:
                 
                 self.perchoose.set_alpha(64)
                 self.perchoose_rect = self.rect.copy()
+                self.perchoose_rect.x = self.perchoose_rect.x
                 self.perchoose_rect.y = self.perchoose_rect.y # + self.perchoose_rect.height/2
                 surface.blit(self.perchoose, self.perchoose_rect)
             
@@ -99,7 +98,10 @@ class Block:
     def motion(self):
         try:
             touch_rect = self.rect.copy()
-            touch_rect.y = touch_rect.y + touch_rect.height/2
+            touch_rect.width = touch_rect.width*self.size
+            touch_rect.height = touch_rect.height*self.size
+            touch_rect.x = touch_rect.x*self.size
+            touch_rect.y = touch_rect.y*self.size + touch_rect.height/2
             
             pos = pygame.mouse.get_pos()
             block_mask = pygame.mask.from_surface(self.mask)
@@ -116,7 +118,10 @@ class Block:
     def touch(self,change_block):
         try:
             touch_rect = self.rect.copy()
-            touch_rect.y = touch_rect.y + touch_rect.height/2
+            touch_rect.width = touch_rect.width*self.size
+            touch_rect.height = touch_rect.height*self.size
+            touch_rect.x = touch_rect.x*self.size
+            touch_rect.y = touch_rect.y*self.size + touch_rect.height/2
             
             pos = pygame.mouse.get_pos()
             block_mask = pygame.mask.from_surface(self.mask)
@@ -129,8 +134,8 @@ class Block:
                         self.id = change_block
                         self.render_id = self.id
                         
-                        self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png').convert_alpha()
-                        self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
+                        self.assets = pygame.image.load(self.config['assets_original']+str(self.id)+'.png').convert_alpha()
+                        # self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
         except:
             pass
     
