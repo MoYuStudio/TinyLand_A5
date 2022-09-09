@@ -10,7 +10,6 @@ class Block:
         self.id = id
         self.pos = pos
         self.size = size
-        #self.assets = assets
         
         self.offset = [0,0]
         self.motioning = False
@@ -31,26 +30,6 @@ class Block:
             print('Engine/Object: Block (block_data) Missing')
             pass
         
-        # self.block_id = []
-        # for filename in glob.glob(r'assets/block/*.png'):
-        #     self.block_id.append(filename[13:-4])
-        
-        # self.block_id = [str(id),'254','255']
-        
-        # self.assets_original = {}
-        # for id in self.block_id:
-        #     self.assets_original[id] = pygame.image.load('assets/block/'+id+'.png')
-        # self.assets = {}
-        # for id in self.block_id:
-        #     self.assets[id] = pygame.transform.scale(self.assets_original[id],(16*self.size, 16*self.size))
-        
-        
-        # self.rect = self.assets[str(self.id)].get_rect()
-        # self.width = self.rect.width
-        
-        # self.mask = self.assets['254']
-        # self.perchoose = self.assets['255']
-        
         self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png').convert_alpha()
         self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
         
@@ -65,7 +44,6 @@ class Block:
     
     def renderer(self,surface):       
         try:
-            # [str(self.render_id)]
 
             if self.translucence == True:
                 self.assets.set_alpha(48)
@@ -141,6 +119,9 @@ class Block:
                     if self.id == 0:
                         self.id = change_block
                         self.render_id = self.id
+                        
+                        self.assets_original = pygame.image.load(self.config['assets_original']+str(self.render_id)+'.png').convert_alpha()
+                        self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
         except:
             pass
     
