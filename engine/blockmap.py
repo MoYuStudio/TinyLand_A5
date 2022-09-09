@@ -85,11 +85,9 @@ class Blockmap:
     def renderer(self,surface,pos_offset=[0,0]):
         self.surface = surface
         
-        
-        
         threadLock = threading.Lock()
         threads = []
-        threads_num = 1
+        threads_num = 4
         
         key = list(self.block_list.keys())
         key_num = int(len(key)/threads_num)
@@ -126,8 +124,6 @@ class Blockmap:
 
         for t in threads:
             t.join()
-        
-        
             
     def touch(self,change_block,pos_offset=[0,0]):
         for block in self.block_list:

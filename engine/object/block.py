@@ -135,7 +135,7 @@ class Block:
                         self.render_id = self.id
                         
                         self.assets = pygame.image.load(self.config['assets_original']+str(self.id)+'.png').convert_alpha()
-                        # self.assets = pygame.transform.scale(self.assets_original,(16*self.size, 16*self.size))
+
         except:
             pass
     
