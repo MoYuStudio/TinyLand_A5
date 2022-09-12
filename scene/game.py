@@ -33,14 +33,17 @@ class Game:
         self.bg1 = pygame.image.load('assets/background/0.png')
         self.bg1_ract = self.bg1.get_rect()
         
-        self.block_pick_menu_active = False
+        self.backpack_menu_active = False
         
     def background(self):
         
-        surface = pygame.Surface((self.bg1_ract.width,self.bg1_ract.height)).convert_alpha()
-        surface.fill((0,0,0,0))
-        surface.blit(self.bg1,(-self.blockmap_offset[0]+self.window_size[0]/4,-self.blockmap_offset[1]+self.window_size[1]/4))
-        surface = pygame.transform.scale(surface,(self.bg1_ract.width*self.blockmap_low_size, self.bg1_ract.height*self.blockmap_low_size))
+        # surface = pygame.Surface((self.bg1_ract.width,self.bg1_ract.height)).convert_alpha()
+        # surface.fill((0,0,0,0))
+        # surface.blit(self.bg1,(-self.blockmap_offset[0]+self.window_size[0]/4,-self.blockmap_offset[1]+self.window_size[1]/4))
+        # surface = pygame.transform.scale(surface,(self.bg1_ract.width*self.blockmap_low_size, self.bg1_ract.height*self.blockmap_low_size))
+        
+        surface = pygame.Surface((self.window_size[0],self.window_size[1])).convert_alpha()
+        surface.fill((0,0,0,255))
         
         return surface
         
@@ -76,7 +79,7 @@ class Game:
         
         return surface
     
-    def block_pick_menu(self):
+    def backpack_menu(self):
         
         surface = pygame.Surface((self.window_size[0]/self.config['ui_size'],self.window_size[1]/self.config['ui_size'])).convert_alpha()
         surface.fill((0,0,0,0))
@@ -122,15 +125,15 @@ class Game:
         scene.blit(self.blockmap(),(0,0))
         scene.blit(self.gui(),(0,0))
         
-        if self.block_pick_menu_active == True:
-            scene.blit(self.block_pick_menu(),(0,0))
+        if self.backpack_menu_active == True:
+            scene.blit(self.backpack_menu(),(0,0))
         
         return scene
     
     def scene_event(self,event):
         self.event = event
         
-        if self.block_pick_menu_active == False:
+        if self.backpack_menu_active == False:
         
             if self.event.type == pygame.MOUSEMOTION:
                 self.blockmap_obj.motion(pos_offset=self.blockmap_offset)
@@ -150,7 +153,7 @@ class Game:
                     
             if self.event.type == pygame.KEYDOWN:
                 if self.event.key == pygame.K_q:
-                    self.block_pick_menu_active = True
+                    self.backpack_menu_active = True
                 if self.event.key == pygame.K_r:
                     print('reset the perlin noise map ...')
                     self.blockmap_obj.perlin_noise_set()
@@ -165,7 +168,7 @@ class Game:
                 if self.event.key == pygame.K_RIGHT or self.event.key == pygame.K_d:
                     self.move_right = False
                     
-        if self.block_pick_menu_active == True:
+        if self.backpack_menu_active == True:
             if self.event.type == pygame.KEYDOWN:
                 if self.event.key == pygame.K_e:
-                    self.block_pick_menu_active = False
+                    self.backpack_menu_active = False
