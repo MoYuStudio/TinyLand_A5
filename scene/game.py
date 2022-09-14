@@ -28,7 +28,7 @@ class Game:
         self.move_left = False
         self.move_right = False
         
-        self.block_pick = 4
+        self.block_pick = 257
         
         self.bg1 = pygame.image.load('assets/background/0.png')
         self.bg1_ract = self.bg1.get_rect()

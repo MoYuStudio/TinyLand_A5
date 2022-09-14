@@ -61,8 +61,6 @@
 
 261:
   name: normal_farmland_lv4
-  animation_timer: 10
-  animation_frame: 1
 
 262:
   name: windmill_lv0

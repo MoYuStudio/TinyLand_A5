@@ -63,6 +63,7 @@ class Block:
                         
                         if type == 'grow':
                             self.id = the_block_data['grow_next']
+                            self.assets = pygame.image.load(self.config['assets_original']+str(self.id)+'.png').convert_alpha()
                             self.render_id = self.id
                         if type == 'animation':
                             if self.animation_frame >= the_block_data['animation_frame']:
