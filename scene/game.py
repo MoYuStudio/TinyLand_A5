@@ -159,10 +159,10 @@ class Game:
                 self.backpack_obj.motion()
             
             if self.event.type == pygame.MOUSEBUTTONDOWN:
-                print(self.block_pick)
+
                 self.backpack_obj.touch()
                 self.block_pick = self.backpack_obj.bpk_id
-                print(self.block_pick)
+
                 
             if self.event.type == pygame.KEYDOWN:
                 if self.event.key == pygame.K_e:
