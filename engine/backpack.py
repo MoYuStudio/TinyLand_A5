@@ -9,8 +9,12 @@ class Backpack:
         
         self.window_size = pygame.display.get_surface().get_size()
         
+        # for y in self.map:
+        #     for x in range(len(self.map[y])):
+        #         self.block_list[str(x)+'_'+str(y)+'_'+str(z)] = object.block.Block(block_id,block_pos,self.block_size)#,self.block_assets
+        
     def renderer(self,surface):
-        pass
+        self.surface = surface
     
     def motion(self):
         pass

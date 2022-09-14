@@ -7,6 +7,8 @@ import threading
 import noise
 import pygame
 
+import drivers
+
 import engine.object as object
 
 class Blockmap:
@@ -16,6 +18,7 @@ class Blockmap:
         self.block_size = block_size
         
         self.block_motion_on = 0
+        # self.block_below = 0
         
         self.block_list = {}
         self.block_pos_list = {}
@@ -30,6 +33,13 @@ class Blockmap:
                     block_id = self.map[y][x][z]
                     self.block_pos_list[str(x)+'_'+str(y)+'_'+str(z)] = block_pos
                     self.block_list[str(x)+'_'+str(y)+'_'+str(z)] = object.block.Block(block_id,block_pos,self.block_size)#,self.block_assets
+        
+        yaml = drivers.yaml.yaml_driver.YamlDriver()
+        try:
+            self.block_data = yaml.read(read_file='data/block/data.yml')
+        except:
+            print('Engine/Object: Block (block_data) Missing')
+            pass
     
     def perlin_noise_set(self):
         map_boarder = 16
@@ -128,14 +138,22 @@ class Blockmap:
     def touch(self,change_block,pos_offset=[0,0]):
         for block in self.block_list:
             self.block_list[block].offset = pos_offset
-            self.block_list[block].touch(change_block)
+            
+            block_id = block.split('_', 3)
+            try:
+                if self.block_list[block_id[0]+'_0_'+block_id[2]].id in self.block_data[change_block]['buildable']:
+                     self.block_list[block].touch(change_block)
+            except:
+                pass
             
     def motion(self,pos_offset=[0,0]):
         for block in self.block_list:
             self.block_list[block].offset = pos_offset
             self.block_list[block].motion()
+            
             if self.block_list[block].motioning == True:
                 self.block_motion_on = self.block_list[block].id
+                
                 for id in self.translucence_id_list:
                     try:
                         self.block_list[id].translucence = False

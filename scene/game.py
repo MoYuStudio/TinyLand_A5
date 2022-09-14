@@ -57,7 +57,7 @@ class Game:
         
         surface = pygame.transform.scale(surface,(self.window_size[0],self.window_size[1]))
         
-        print('1   '+str(time.time()-start_time))
+        # print('1   '+str(time.time()-start_time))
         
         return surface
 

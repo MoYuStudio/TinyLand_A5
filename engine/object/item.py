@@ -35,6 +35,7 @@ class Item:
             if pygame.mouse.get_pressed()[0] == True:
                 if pygame.Rect.collidepoint(self.rect,pygame.mouse.get_pos()):
                     self.motioning = True
+                    print('motioning')
                     # pygame.mixer.Channel(1).play(pygame.mixer.Sound("assets/sound/effect/switch_001.ogg"))
                     # time.sleep(0.1)
         except:
@@ -48,6 +49,7 @@ class Item:
             if pygame.mouse.get_pressed()[0] == True:
                 if pygame.Rect.collidepoint(self.rect,pygame.mouse.get_pos()):
                     self.clicking = True
+                    print('clicking')
                     # pygame.mixer.Channel(1).play(pygame.mixer.Sound("assets/sound/effect/switch_001.ogg"))
                     # time.sleep(0.1)
         except:
