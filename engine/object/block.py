@@ -135,6 +135,10 @@ class Block:
                         self.render_id = self.id
                         
                         self.assets = pygame.image.load(self.config['assets_original']+str(self.id)+'.png').convert_alpha()
+                        try:
+                            self.assets_a1 = pygame.image.load(self.config['assets_original']+str(self.id)+'a1'+'.png').convert_alpha()
+                        except:
+                            pass
 
         except:
             pass

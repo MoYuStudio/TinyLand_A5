@@ -65,5 +65,6 @@
 262:
   name: windmill_lv0
   cost: {type: coin,num: 0}
+  buildable: [1,2]
   animation_timer: 10
   animation_frame: 1

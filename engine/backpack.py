@@ -46,4 +46,6 @@ class Backpack:
     
     def touch(self):
         for item in self.item_list:
-            self.item_list[item].touch()
+            self.clicking = self.item_list[item].touch()
+            if self.clicking == True:
+                self.bpk_id = self.item_list[item].id

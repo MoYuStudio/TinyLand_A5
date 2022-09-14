@@ -88,25 +88,7 @@ class Game:
         
         surface.fill((0,0,0,128))
         
-        # surface = pygame.transform.scale(surface,(self.window_size[0], self.window_size[1]))
-        
         self.backpack_obj.renderer(surface)
-        
-        # block_list = []
-        # for filename in glob.glob(r'assets/block/*.png'):
-        #     block_list.append(filename)
-        
-        # x,y = 0,0
-        # for block in block_list:
-        #     block_original = pygame.image.load(block)
-        #     block = pygame.transform.scale(block_original,(16*self.config['ui_size']/2, 16*self.config['ui_size']/2))
-        #     surface.blit(block,(100+x*(64),100+y*(64)))
-        #     if x == 6:
-        #         x = 0
-        #         y += 1
-        #     x+=1
-            
-            # surface.blit(self.tile_assets[i],(i*16,100))
             
         return surface
         
@@ -177,7 +159,10 @@ class Game:
                 self.backpack_obj.motion()
             
             if self.event.type == pygame.MOUSEBUTTONDOWN:
+                print(self.block_pick)
                 self.backpack_obj.touch()
+                self.block_pick = self.backpack_obj.bpk_id
+                print(self.block_pick)
                 
             if self.event.type == pygame.KEYDOWN:
                 if self.event.key == pygame.K_e:

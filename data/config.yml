@@ -5,8 +5,8 @@ window_icon: assets/icon/icon.png
 
 window_mod: null
 window_size:
-  - 1280
-  - 720
+  - 1280 # 1920
+  - 720 # 1080
 window_fps: 120
 
 resolution_size: 4
