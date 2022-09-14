@@ -68,3 +68,13 @@
   buildable: [1,2]
   animation_timer: 10
   animation_frame: 1
+
+263:
+  name: farmbuilding
+  cost: {type: coin,num: 0}
+  buildable: [1,2]
+
+512:
+  name: building
+  cost: {type: coin,num: 0}
+  buildable: [1,2]
