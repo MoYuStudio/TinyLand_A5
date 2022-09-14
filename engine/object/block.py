@@ -23,7 +23,6 @@ class Block:
         
         yaml = drivers.yaml.yaml_driver.YamlDriver()
         self.config = yaml.read(read_file='data/engine/block.yml')
-        
         try:
             self.block_data = yaml.read(read_file=self.config['block_data'])
         except:

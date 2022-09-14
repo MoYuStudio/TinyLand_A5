@@ -1,6 +1,8 @@
 
 import pygame
 
+import drivers
+
 import engine.object as object
 
 class Backpack:
@@ -9,15 +11,39 @@ class Backpack:
         
         self.window_size = pygame.display.get_surface().get_size()
         
-        # for y in self.map:
-        #     for x in range(len(self.map[y])):
-        #         self.block_list[str(x)+'_'+str(y)+'_'+str(z)] = object.block.Block(block_id,block_pos,self.block_size)#,self.block_assets
+        self.display_size = [7,5]
+        self.safe_zoom = 64
+        self.gap_num = [(self.window_size[0]-self.safe_zoom*2)//self.display_size[0],(self.window_size[1]-self.safe_zoom*2)//self.display_size[1]]
+        self.item_list = {}
+        
+        yaml = drivers.yaml.yaml_driver.YamlDriver()
+        try:
+            self.backpack_data = yaml.read(read_file='data/player/backpack.yml')
+        except:
+            pass
+        
+        timer = 0
+        for y in range(self.display_size[1]):
+            for x in range(self.display_size[0]):
+                
+                try:
+                    if self.backpack_data[timer] != None:
+                        self.item_list[str(x)+'_'+str(y)] = object.item.Item(self.backpack_data[timer]['id'],self.backpack_data[timer]['num'],[x*self.gap_num[0]+self.safe_zoom,y*self.gap_num[1]+self.safe_zoom],self.item_size)
+                except:
+                    pass
+                
+                timer += 1
         
     def renderer(self,surface):
         self.surface = surface
+        
+        for item in self.item_list:
+            self.item_list[item].renderer(self.surface)
     
     def motion(self):
-        pass
+        for item in self.item_list:
+            self.item_list[item].motion()
     
     def touch(self):
-        pass
+        for item in self.item_list:
+            self.item_list[item].touch()
