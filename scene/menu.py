@@ -1,4 +1,6 @@
 
+import random
+
 import pygame
 
 import engine
@@ -39,7 +41,7 @@ class Menu:
         
         scene = pygame.Surface((self.window_size[0],self.window_size[1])).convert_alpha()
         scene.fill((0,0,0,0))
-        scene.blit(self.background(),(0,0))
+        scene.blit(self.background(),(random.randint(10,20),random.randint(10,20)))
         
         self.timer += 1
         if self.timer//360>=1:
@@ -56,10 +58,6 @@ class Menu:
         if self.event.type == pygame.MOUSEBUTTONDOWN:
             try:
                 if self.tile1_ui.touch() == True:
-                    print('start')
                     self.scene_switch = 'game'
             except:
                 pass
-            
-    def scene_event(self,event):
-        self.event = event
