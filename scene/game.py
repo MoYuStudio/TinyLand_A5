@@ -76,6 +76,10 @@ class Game:
         choose_block_name_font = pygame.font.Font('assets/font/kenney_pixel.ttf', 7*self.config['ui_size'])
         choose_block_name = choose_block_name_font.render(self.block_data[self.blockmap_obj.block_motion_on]['name'], True, (255,255,255))
         
+        input_map_original = pygame.image.load('assets/ui/input_map.png').convert_alpha()
+        input_map = pygame.transform.scale(input_map_original,(64*self.config['ui_size']/2, 64*self.config['ui_size']/2))
+        
+        surface.blit(input_map, ((self.window_size[0]-64*self.config['ui_size']/2,self.window_size[1]-64*self.config['ui_size']/2)))
         surface.blit(choose_block, (self.window_size[0]/(16*self.config['ui_size']),self.window_size[1]/(9*self.config['ui_size'])))
         surface.blit(choose_block_name, ((self.window_size[0]/(16*self.config['ui_size']))+(self.window_size[0]/(6*self.config['ui_size'])),self.window_size[1]/(6*self.config['ui_size'])))
         
@@ -138,7 +142,7 @@ class Game:
                     self.move_right = True
                     
             if self.event.type == pygame.KEYDOWN:
-                if self.event.key == pygame.K_q:
+                if self.event.key == pygame.K_b:
                     self.backpack_menu_active = True
                 if self.event.key == pygame.K_r:
                     print('reset the perlin noise map ...')
@@ -165,5 +169,5 @@ class Game:
 
                 
             if self.event.type == pygame.KEYDOWN:
-                if self.event.key == pygame.K_e:
+                if self.event.key == pygame.K_ESCAPE:
                     self.backpack_menu_active = False
