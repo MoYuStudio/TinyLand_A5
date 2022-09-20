@@ -10,9 +10,11 @@ import drivers
 class Game:
     def __init__(self):
         self.window_size = pygame.display.get_surface().get_size()
-        yaml_file = drivers.yaml.yaml_driver.YamlDriver()
-        self.config = yaml_file.read(read_file='data/config.yml')
-        self.block_data = yaml_file.read(read_file='data/block/data.yml')
+        
+        self.yaml_file = drivers.yaml.yaml_driver.YamlDriver()
+        self.config = self.yaml_file.read(read_file='data/config.yml')
+        self.block_data = self.yaml_file.read(read_file='data/block/data.yml')
+        
         
         json_file = drivers.json.json_driver.JsonDriver(path='data/blockmap')
         self.map = json_file.read()
@@ -36,6 +38,16 @@ class Game:
         self.backpack_menu_active = False
         
         self.backpack_obj = engine.backpack.Backpack(5)
+        
+        self.input_map_original = pygame.image.load('assets/ui/game/input_map.png').convert_alpha()
+        self.input_map = pygame.transform.scale(self.input_map_original,(64*self.config['ui_size']/2, 64*self.config['ui_size']/2))
+        
+        self.topleft_infoboard_original = pygame.image.load('assets/ui/game/topleft_infoboard.png').convert_alpha()
+        self.topleft_infoboard = pygame.transform.scale(self.topleft_infoboard_original,(64*self.config['ui_size']/2, 64*self.config['ui_size']/2))
+        self.topleft_infoboard_font = pygame.font.Font('assets/font/kenney_pixel.ttf', 7*self.config['ui_size'])
+        
+        self.button_blockboard_original = pygame.image.load('assets/ui/game/button_blockboard.png').convert_alpha()
+        self.button_blockboard = pygame.transform.scale(self.button_blockboard_original,(320*self.config['ui_size']/2, 32*self.config['ui_size']/2))
         
     def background(self):
         
@@ -65,28 +77,42 @@ class Game:
 
     def gui(self):
         
+        self.player_data = self.yaml_file.read(read_file='data/player/data.yml')
+        
         surface = pygame.Surface((self.window_size[0],self.window_size[1])).convert_alpha()
         surface.fill((0,0,0,0))
         
         # self.blockmap_obj.block_motion_on
         
-        # choose_block_original = pygame.image.load('assets/block/'+str(self.blockmap_obj.block_motion_on)+'.png').convert_alpha()
-        # choose_block = pygame.transform.scale(choose_block_original,(16*self.config['ui_size']/2, 16*self.config['ui_size']/2))
+        choose_block_original = pygame.image.load('assets/block/'+str(self.blockmap_obj.block_motion_on)+'.png').convert_alpha()
+        choose_block = pygame.transform.scale(choose_block_original,(16*self.config['ui_size']/2, 16*self.config['ui_size']/2))
         
-        # choose_block_name_font = pygame.font.Font('assets/font/kenney_pixel.ttf', 7*self.config['ui_size'])
-        # choose_block_name = choose_block_name_font.render(self.block_data[self.blockmap_obj.block_motion_on]['name'], True, (255,255,255))
+        choose_block_name_font = pygame.font.Font('assets/font/kenney_pixel.ttf', 7*self.config['ui_size'])
+        if self.block_data[self.blockmap_obj.block_motion_on]['name'] != 'air':
+            choose_block_name = choose_block_name_font.render(self.block_data[self.blockmap_obj.block_motion_on]['name'], True, (255,255,255))
+        else:
+            choose_block_name = choose_block_name_font.render('', True, (255,255,255))
         
-        input_map_original = pygame.image.load('assets/ui/game/input_map.png').convert_alpha()
-        input_map = pygame.transform.scale(input_map_original,(64*self.config['ui_size']/2, 64*self.config['ui_size']/2))
         
-        topleft_infoboard_original = pygame.image.load('assets/ui/game/topleft_infoboard.png').convert_alpha()
-        topleft_infoboard = pygame.transform.scale(topleft_infoboard_original,(64*self.config['ui_size']/2, 64*self.config['ui_size']/2))
+        topleft_infoboard_development_point = self.topleft_infoboard_font.render(str(self.player_data['development_point']), True, (255,255,255))
+        topleft_infoboard_population = self.topleft_infoboard_font.render(str(self.player_data['population']), True, (255,255,255))
+        topleft_infoboard_money = self.topleft_infoboard_font.render(str(self.player_data['money']), True, (255,255,255))
         
-        surface.blit(input_map, ((self.window_size[0]-64*self.config['ui_size']/2,self.window_size[1]-64*self.config['ui_size']/2)))
-        # surface.blit(choose_block, (self.window_size[0]/(16*self.config['ui_size']),self.window_size[1]/(9*self.config['ui_size'])))
-        # surface.blit(choose_block_name, ((self.window_size[0]/(16*self.config['ui_size']))+(self.window_size[0]/(6*self.config['ui_size'])),self.window_size[1]/(6*self.config['ui_size'])))
         
-        surface.blit(topleft_infoboard, ((0,0)))
+        
+        
+        surface.blit(self.input_map, ((self.window_size[0]-64*self.config['ui_size']/2,self.window_size[1]-64*self.config['ui_size']/2)))
+        
+        surface.blit(choose_block, (4*self.config['ui_size'],self.window_size[1]-(16*self.config['ui_size'])))
+        surface.blit(choose_block_name, (16*self.config['ui_size'],self.window_size[1]-(16*self.config['ui_size'])))
+        
+        surface.blit(self.topleft_infoboard, ((0,0)))
+        surface.blit(topleft_infoboard_development_point, (16*self.config['ui_size']/2,16*1*self.config['ui_size']/2))
+        surface.blit(topleft_infoboard_population, (16*self.config['ui_size']/2,16*2*self.config['ui_size']/2))
+        surface.blit(topleft_infoboard_money, (16*self.config['ui_size']/2,16*3*self.config['ui_size']/2))
+        
+        surface.blit(self.button_blockboard, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2,self.window_size[1]-32*self.config['ui_size']/2))
+        
         
         return surface
     
