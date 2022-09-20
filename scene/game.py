@@ -18,7 +18,7 @@ class Game:
         self.map = json_file.read()
         
         # self.size = 1
-        self.blockmap_low_size = 4
+        self.blockmap_low_size = 5
         self.blockmap_obj = engine.blockmap.Blockmap(self.map['1'],self.blockmap_low_size)
         
         self.blockmap_offset = [self.window_size[0]/2/self.blockmap_low_size,self.window_size[1]/2/self.blockmap_low_size]
@@ -70,18 +70,23 @@ class Game:
         
         # self.blockmap_obj.block_motion_on
         
-        choose_block_original = pygame.image.load('assets/block/'+str(self.blockmap_obj.block_motion_on)+'.png').convert_alpha()
-        choose_block = pygame.transform.scale(choose_block_original,(16*self.config['ui_size']/2, 16*self.config['ui_size']/2))
+        # choose_block_original = pygame.image.load('assets/block/'+str(self.blockmap_obj.block_motion_on)+'.png').convert_alpha()
+        # choose_block = pygame.transform.scale(choose_block_original,(16*self.config['ui_size']/2, 16*self.config['ui_size']/2))
         
-        choose_block_name_font = pygame.font.Font('assets/font/kenney_pixel.ttf', 7*self.config['ui_size'])
-        choose_block_name = choose_block_name_font.render(self.block_data[self.blockmap_obj.block_motion_on]['name'], True, (255,255,255))
+        # choose_block_name_font = pygame.font.Font('assets/font/kenney_pixel.ttf', 7*self.config['ui_size'])
+        # choose_block_name = choose_block_name_font.render(self.block_data[self.blockmap_obj.block_motion_on]['name'], True, (255,255,255))
         
-        input_map_original = pygame.image.load('assets/ui/input_map.png').convert_alpha()
+        input_map_original = pygame.image.load('assets/ui/game/input_map.png').convert_alpha()
         input_map = pygame.transform.scale(input_map_original,(64*self.config['ui_size']/2, 64*self.config['ui_size']/2))
         
+        topleft_infoboard_original = pygame.image.load('assets/ui/game/topleft_infoboard.png').convert_alpha()
+        topleft_infoboard = pygame.transform.scale(topleft_infoboard_original,(64*self.config['ui_size']/2, 64*self.config['ui_size']/2))
+        
         surface.blit(input_map, ((self.window_size[0]-64*self.config['ui_size']/2,self.window_size[1]-64*self.config['ui_size']/2)))
-        surface.blit(choose_block, (self.window_size[0]/(16*self.config['ui_size']),self.window_size[1]/(9*self.config['ui_size'])))
-        surface.blit(choose_block_name, ((self.window_size[0]/(16*self.config['ui_size']))+(self.window_size[0]/(6*self.config['ui_size'])),self.window_size[1]/(6*self.config['ui_size'])))
+        # surface.blit(choose_block, (self.window_size[0]/(16*self.config['ui_size']),self.window_size[1]/(9*self.config['ui_size'])))
+        # surface.blit(choose_block_name, ((self.window_size[0]/(16*self.config['ui_size']))+(self.window_size[0]/(6*self.config['ui_size'])),self.window_size[1]/(6*self.config['ui_size'])))
+        
+        surface.blit(topleft_infoboard, ((0,0)))
         
         return surface
     
