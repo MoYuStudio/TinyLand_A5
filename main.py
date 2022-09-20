@@ -24,7 +24,7 @@ window_title = pygame.display.set_caption(config['window_title'])
 window_icon = pygame.display.set_icon(pygame.image.load(config['window_icon']))
 window_clock = pygame.time.Clock()
 
-is_scene = 'prologue'
+is_scene = 'game'
 scene_list = {
                 'prologue':scene.prologue.Prologue(),
                 'menu':scene.menu.Menu(),

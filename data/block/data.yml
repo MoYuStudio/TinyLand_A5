@@ -2,6 +2,8 @@
 # TinyLand 弹丸之地 瓷砖
 
 # 地面 0   - 255
+  # 地面 block 0 - 128
+  # 地面 item 129 - 255
 # 农业 256 - 511
 # 工业 512 - 768
 # 金融 769 - 1024
@@ -26,8 +28,12 @@
   animation_timer: 10
   animation_frame: 1
 
-13:
-  animation_timer: 10
+6:
+  name: mine
+
+129:
+  name: tree
+  animation_timer: 30
   animation_frame: 1
 
 256:

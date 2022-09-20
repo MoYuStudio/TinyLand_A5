@@ -64,13 +64,21 @@ class Blockmap:
                     perlin_noise_map_1[x].append(0)
                 elif 41 <= perlin_noise_map_list[x][z] <= 65:
                     perlin_noise_map_0[x].append(1)
-                    perlin_noise_map_1[x].append(0)
+                    grass_random = random.randint(0,100)
+                    if 0<= grass_random <= 60:
+                        perlin_noise_map_1[x].append(0)
+                    elif 61<= grass_random <= 100:
+                        perlin_noise_map_1[x].append(129)
                 elif 66 <= perlin_noise_map_list[x][z] <= 70:
                     perlin_noise_map_0[x].append(2)
                     perlin_noise_map_1[x].append(0)
                 elif 70 <= perlin_noise_map_list[x][z] <= 1100:
                     perlin_noise_map_0[x].append(4)
-                    perlin_noise_map_1[x].append(4)
+                    stone_random = random.randint(0,100)
+                    if 0<= stone_random <= 92:
+                        perlin_noise_map_1[x].append(4)
+                    elif 93<= stone_random <= 100:
+                        perlin_noise_map_1[x].append(6)
                 else:
                     perlin_noise_map_0[x].append(0)
                     perlin_noise_map_1[x].append(0)
