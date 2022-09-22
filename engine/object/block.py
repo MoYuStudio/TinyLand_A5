@@ -50,8 +50,16 @@ class Block:
 
             if self.translucence == True:
                 self.assets.set_alpha(48)
+                try:
+                    self.assets_a1.set_alpha(48)
+                except:
+                    pass
             if self.translucence == False:
                 self.assets.set_alpha(255)
+                try:
+                    self.assets_a1.set_alpha(255)
+                except:
+                    pass
             
             the_block_data = self.block_data[self.id]
 
