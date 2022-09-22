@@ -42,7 +42,7 @@ class Blockmap:
             pass
     
     def perlin_noise_set(self):
-        map_boarder = 21
+        map_boarder = 16
         octaves = 2 #2
         freq = random.randint(5,10) #12
         map_seed = random.randint(100000, 999999)

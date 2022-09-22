@@ -20,7 +20,7 @@ class Game:
         self.map = json_file.read()
         
         # self.size = 1
-        self.blockmap_low_size = 5
+        self.blockmap_low_size = 6
         self.blockmap_obj = engine.blockmap.Blockmap(self.map['1'],self.blockmap_low_size)
         
         self.blockmap_offset = [self.window_size[0]/2/self.blockmap_low_size,self.window_size[1]/2/self.blockmap_low_size]
@@ -138,11 +138,6 @@ class Game:
             surface.blit(self.button_blockboard_2, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2,self.window_size[1]-2*32*self.config['ui_size']/2))
         if self.infrastructure_menu_switch == True:
             surface.blit(self.button_blockboard_2, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2,self.window_size[1]-2*32*self.config['ui_size']/2))
-        
-        # surface.blit(self.land_icon, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2 + 44*self.config['ui_size'], self.window_size[1]-32*self.config['ui_size']/2 + 4.5*self.config['ui_size']))
-        # surface.blit(self.farm_icon, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2 + 44*self.config['ui_size'] + 1*11.5*self.config['ui_size'], self.window_size[1]-32*self.config['ui_size']/2 + 4.5*self.config['ui_size']))
-        # surface.blit(self.factory_icon, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2 + 44*self.config['ui_size'] + 2*11.5*self.config['ui_size'], self.window_size[1]-32*self.config['ui_size']/2 + 4.5*self.config['ui_size']))
-        # surface.blit(self.infrastructure_icon, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2 + 44*self.config['ui_size'] + 3*11.5*self.config['ui_size'], self.window_size[1]-32*self.config['ui_size']/2 + 4.5*self.config['ui_size']))
         
         self.land_icon_ui.image_button_renderer(surface,self.land_icon,pos=[self.window_size[0]/2-(320*self.config['ui_size']/2)/2 + 44*self.config['ui_size'], self.window_size[1]-32*self.config['ui_size']/2 + 4.5*self.config['ui_size']])
         self.farm_icon_ui.image_button_renderer(surface,self.farm_icon,pos=[self.window_size[0]/2-(320*self.config['ui_size']/2)/2 + 44*self.config['ui_size'] + 1*11.5*self.config['ui_size'], self.window_size[1]-32*self.config['ui_size']/2 + 4.5*self.config['ui_size']])
