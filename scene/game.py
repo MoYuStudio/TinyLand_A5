@@ -23,7 +23,7 @@ class Game:
         self.blockmap_low_size = 6
         self.blockmap_obj = engine.blockmap.Blockmap(self.map['1'],self.blockmap_low_size)
         
-        self.blockmap_offset = [self.window_size[0]/2/self.blockmap_low_size,self.window_size[1]/2/self.blockmap_low_size]
+        self.blockmap_offset = [self.window_size[0]/2/self.blockmap_low_size,self.window_size[1]/2/self.blockmap_low_size/2]
         self.move_speed = 3
         self.move_up = False
         self.move_down = False
