@@ -39,8 +39,8 @@ class Game:
         
         self.backpack_obj = engine.backpack.Backpack(5)
         
-        self.input_map_original = pygame.image.load('assets/ui/game/input_map.png').convert_alpha()
-        self.input_map = pygame.transform.scale(self.input_map_original,(64*self.config['ui_size']/2, 64*self.config['ui_size']/2))
+        # self.input_map_original = pygame.image.load('assets/ui/game/input_map.png').convert_alpha()
+        # self.input_map = pygame.transform.scale(self.input_map_original,(64*self.config['ui_size']/2, 64*self.config['ui_size']/2))
         
         self.topleft_infoboard_original = pygame.image.load('assets/ui/game/topleft_infoboard.png').convert_alpha()
         self.topleft_infoboard = pygame.transform.scale(self.topleft_infoboard_original,(64*self.config['ui_size']/2, 64*self.config['ui_size']/2))
@@ -48,6 +48,8 @@ class Game:
         
         self.button_blockboard_original = pygame.image.load('assets/ui/game/button_blockboard.png').convert_alpha()
         self.button_blockboard = pygame.transform.scale(self.button_blockboard_original,(320*self.config['ui_size']/2, 32*self.config['ui_size']/2))
+        self.button_blockboard_2_original = pygame.image.load('assets/ui/game/button_blockboard_2.png').convert_alpha()
+        self.button_blockboard_2 = pygame.transform.scale(self.button_blockboard_2_original,(320*self.config['ui_size']/2, 32*self.config['ui_size']/2))
         
         self.land_icon_original = pygame.image.load('assets/block/1.png').convert_alpha()
         self.land_icon = pygame.transform.scale(self.land_icon_original,(16*self.config['ui_size']/2, 16*self.config['ui_size']/2))
@@ -61,6 +63,11 @@ class Game:
         self.farm_icon_ui = engine.object.ui.UI()
         self.factory_icon_ui = engine.object.ui.UI()
         self.infrastructure_icon_ui = engine.object.ui.UI()
+        
+        # farm_icon
+        self.farmland_ui = engine.object.ui.UI()
+        
+        self.land_menu_switch,self.farm_menu_switch,self.factory_menu_switch,self.infrastructure_menu_switch = False,False,False,False
         
     def background(self):
         
@@ -97,23 +104,23 @@ class Game:
         
         # self.blockmap_obj.block_motion_on
         
-        choose_block_original = pygame.image.load('assets/block/'+str(self.blockmap_obj.block_motion_on)+'.png').convert_alpha()
-        choose_block = pygame.transform.scale(choose_block_original,(16*self.config['ui_size']/2, 16*self.config['ui_size']/2))
+        # choose_block_original = pygame.image.load('assets/block/'+str(self.blockmap_obj.block_motion_on)+'.png').convert_alpha()
+        # choose_block = pygame.transform.scale(choose_block_original,(16*self.config['ui_size']/2, 16*self.config['ui_size']/2))
         
-        choose_block_name_font = pygame.font.Font('assets/font/kenney_pixel.ttf', 7*self.config['ui_size'])
-        if self.block_data[self.blockmap_obj.block_motion_on]['name'] != 'air':
-            choose_block_name = choose_block_name_font.render(self.block_data[self.blockmap_obj.block_motion_on]['name'], True, (255,255,255))
-        else:
-            choose_block_name = choose_block_name_font.render('', True, (255,255,255))
+        # choose_block_name_font = pygame.font.Font('assets/font/kenney_pixel.ttf', 7*self.config['ui_size'])
+        # if self.block_data[self.blockmap_obj.block_motion_on]['name'] != 'air':
+        #     choose_block_name = choose_block_name_font.render(self.block_data[self.blockmap_obj.block_motion_on]['name'], True, (255,255,255))
+        # else:
+        #     choose_block_name = choose_block_name_font.render('', True, (255,255,255))
         
         topleft_infoboard_development_point = self.topleft_infoboard_font.render(str(self.player_data['development_point']), True, (255,255,255))
         topleft_infoboard_population = self.topleft_infoboard_font.render(str(self.player_data['population']), True, (255,255,255))
         topleft_infoboard_money = self.topleft_infoboard_font.render(str(self.player_data['money']), True, (255,255,255))
         
-        surface.blit(self.input_map, ((self.window_size[0]-64*self.config['ui_size']/2,self.window_size[1]-64*self.config['ui_size']/2)))
+        # surface.blit(self.input_map, ((self.window_size[0]-64*self.config['ui_size']/2,self.window_size[1]-64*self.config['ui_size']/2)))
         
-        surface.blit(choose_block, (4*self.config['ui_size'],self.window_size[1]-(16*self.config['ui_size'])))
-        surface.blit(choose_block_name, (16*self.config['ui_size'],self.window_size[1]-(16*self.config['ui_size'])))
+        # surface.blit(choose_block, (4*self.config['ui_size'],self.window_size[1]-(16*self.config['ui_size'])))
+        # surface.blit(choose_block_name, (16*self.config['ui_size'],self.window_size[1]-(16*self.config['ui_size'])))
         
         surface.blit(self.topleft_infoboard, ((0,0)))
         surface.blit(topleft_infoboard_development_point, (16*self.config['ui_size']/2,16*1*self.config['ui_size']/2))
@@ -121,6 +128,16 @@ class Game:
         surface.blit(topleft_infoboard_money, (16*self.config['ui_size']/2,16*3*self.config['ui_size']/2))
         
         surface.blit(self.button_blockboard, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2,self.window_size[1]-32*self.config['ui_size']/2))
+        
+        if self.land_menu_switch == True:
+            surface.blit(self.button_blockboard_2, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2,self.window_size[1]-2*32*self.config['ui_size']/2))
+        if self.farm_menu_switch == True:
+            surface.blit(self.button_blockboard_2, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2,self.window_size[1]-2*32*self.config['ui_size']/2))
+            self.farmland_ui.image_button_renderer(surface,self.farm_icon,pos=[self.window_size[0]/2-(320*self.config['ui_size']/2)/2 + 4*self.config['ui_size'] + 0*11.5*self.config['ui_size'],self.window_size[1]-2*32*self.config['ui_size']/2+6*self.config['ui_size']])
+        if self.factory_menu_switch == True:
+            surface.blit(self.button_blockboard_2, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2,self.window_size[1]-2*32*self.config['ui_size']/2))
+        if self.infrastructure_menu_switch == True:
+            surface.blit(self.button_blockboard_2, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2,self.window_size[1]-2*32*self.config['ui_size']/2))
         
         # surface.blit(self.land_icon, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2 + 44*self.config['ui_size'], self.window_size[1]-32*self.config['ui_size']/2 + 4.5*self.config['ui_size']))
         # surface.blit(self.farm_icon, (self.window_size[0]/2-(320*self.config['ui_size']/2)/2 + 44*self.config['ui_size'] + 1*11.5*self.config['ui_size'], self.window_size[1]-32*self.config['ui_size']/2 + 4.5*self.config['ui_size']))
@@ -183,24 +200,40 @@ class Game:
                     if self.land_icon_ui.touch() == True:
                         print('land_icon_ui')
                         button_blockboard_switch = True
+                        if self.land_menu_switch == True:
+                            self.land_menu_switch = False
+                        elif self.land_menu_switch == False:
+                            self.land_menu_switch,self.farm_menu_switch,self.factory_menu_switch,self.infrastructure_menu_switch = True,False,False,False
                 except:
                     pass
                 try:
                     if self.farm_icon_ui.touch() == True:
                         print('farm_icon_ui')
                         button_blockboard_switch = True
+                        if self.farm_menu_switch == True:
+                            self.farm_menu_switch = False
+                        elif self.farm_menu_switch == False:
+                            self.land_menu_switch,self.farm_menu_switch,self.factory_menu_switch,self.infrastructure_menu_switch = False,True,False,False
                 except:
                     pass
                 try:
                     if self.factory_icon_ui.touch() == True:
                         print('factory_icon_ui')
                         button_blockboard_switch = True
+                        if self.factory_menu_switch == True:
+                            self.factory_menu_switch = False
+                        elif self.factory_menu_switch == False:
+                            self.land_menu_switch,self.farm_menu_switch,self.factory_menu_switch,self.infrastructure_menu_switch = False,False,True,False
                 except:
                     pass
                 try:
                     if self.infrastructure_icon_ui.touch() == True:
                         print('infrastructure_icon_ui')
                         button_blockboard_switch = True
+                        if self.infrastructure_menu_switch == True:
+                            self.infrastructure_menu_switch = False
+                        elif self.infrastructure_menu_switch == False:
+                            self.land_menu_switch,self.farm_menu_switch,self.factory_menu_switch,self.infrastructure_menu_switch = False,False,False,True
                 except:
                     pass
             
