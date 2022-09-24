@@ -1,5 +1,4 @@
 
-from tkinter import Button
 import pygame
 
 import drivers
